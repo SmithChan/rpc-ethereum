@@ -20,7 +20,7 @@ const fromTokenAddress = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
 const toTokenAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7"
 
 const balanceOfABIJson = `[{"constant":true,"inputs":[{"name": "","type": "address"}],"name": "balanceOf","outputs":[{"name":"","type": "uint256"}],"payable": false,"stateMutability": "view","type": "function"}]`
-const inputAmout = 1e18
+const inputAmount = 1e18
 
 func Check(err error) {
 	if err != nil {
@@ -76,8 +76,8 @@ func main() {
 	var outputAmount *big.Int
 
 	//Calulate the result by the fomular "const = X * Y"
-	fromTokenAmount.Add(fromTokenAmount, big.NewInt(inputAmout))
-	toTokenAmount.Mul(toTokenAmount, big.NewInt(inputAmout))
+	fromTokenAmount.Add(fromTokenAmount, big.NewInt(inputAmount))
+	toTokenAmount.Mul(toTokenAmount, big.NewInt(inputAmount))
 	toTokenAmount.Div(toTokenAmount, fromTokenAmount)
 
 	outputAmount = big.NewInt(toTokenAmount.Int64())
