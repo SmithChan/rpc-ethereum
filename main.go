@@ -12,7 +12,7 @@ import (
 )
 
 var clientEthereum *rpc.Client
-var contractBalanceof abi.ABI
+var contractBalanceofABI abi.ABI
 
 const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000"
 const poolAddress = "0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852"
@@ -33,10 +33,10 @@ func main() {
 	var resultStrFromToken, resultStrToToken string
 	var fromTokenAmount, toTokenAmount *big.Int
 
-	contractBalanceof, err = abi.JSON(strings.NewReader(balanceOfABIJson))
+	contractBalanceofABI, err = abi.JSON(strings.NewReader(balanceOfABIJson))
 	Check(err)
 
-	poolData, err := contractBalanceof.Pack("balanceOf", common.HexToAddress(poolAddress))
+	poolData, err := contractBalanceofABI.Pack("balanceOf", common.HexToAddress(poolAddress))
 
 	//Create the new RPC Client that is connect to ethereum mainnet
 	clientEthereum, err = rpc.DialHTTP("https://mainnet.infura.io/v3/69461b73caed42a399f9bb9202d63a9c")
@@ -49,7 +49,7 @@ func main() {
 	}, "latest")
 
 	if err == nil {
-		resultFrom, err := contractBalanceof.Unpack("balanceOf", hexutil.MustDecode(resultStrFromToken))
+		resultFrom, err := contractBalanceofABI.Unpack("balanceOf", hexutil.MustDecode(resultStrFromToken))
 		Check(err)
 		fromTokenAmount = resultFrom[0].(*big.Int)
 		fmt.Printf("The balance of fromToken : %s \n", fromTokenAmount.String())
@@ -65,7 +65,7 @@ func main() {
 	}, "latest")
 
 	if err == nil {
-		resultTo, err := contractBalanceof.Unpack("balanceOf", hexutil.MustDecode(resultStrToToken))
+		resultTo, err := contractBalanceofABI.Unpack("balanceOf", hexutil.MustDecode(resultStrToToken))
 		Check(err)
 		toTokenAmount = resultTo[0].(*big.Int)
 		fmt.Printf("The balance of toToken : %s \n", toTokenAmount.String())
