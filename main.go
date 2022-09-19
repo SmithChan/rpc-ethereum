@@ -76,8 +76,13 @@ func main() {
 	var outputAmount *big.Int
 
 	//Calulate the result by the fomular "const = X * Y"
-	fromTokenAmount.Add(fromTokenAmount, big.NewInt(inputAmount))
-	toTokenAmount.Mul(toTokenAmount, big.NewInt(inputAmount))
+	fromTokenAmount.Mul(fromTokenAmount, big.NewInt(1000))
+
+	myInput := big.NewInt(inputAmount)
+	myInput.Mul(myInput, big.NewInt(997))
+	fromTokenAmount.Add(fromTokenAmount, myInput)
+
+	toTokenAmount.Mul(toTokenAmount, myInput)
 	toTokenAmount.Div(toTokenAmount, fromTokenAmount)
 
 	outputAmount = big.NewInt(toTokenAmount.Int64())
